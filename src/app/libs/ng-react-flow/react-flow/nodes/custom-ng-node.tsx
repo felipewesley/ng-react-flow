@@ -3,6 +3,8 @@ import { memo } from "react";
 
 import { Handle, Position } from "reactflow";
 
+const primaryColor = '#3f51b5';
+
 const customNgNodeStyle: React.CSSProperties = {
 
   borderStyle: "none",
@@ -13,7 +15,20 @@ const customNgNodeStyle: React.CSSProperties = {
 
 };
 
-const primaryColor = '#3f51b5';
+const customNgNodeHandleStyle: React.CSSProperties = {
+
+  left: 60,
+  background: primaryColor,
+  color: '#fff',
+  width: 'min-content',
+  height: 'min-content',
+  borderRadius: 7.5,
+  fontSize: 8.5,
+  padding: '2px 6px',
+  borderStyle: 'none',
+  textTransform: 'uppercase'
+
+};
 
 export default memo((props: { data: any, isConnectable: boolean }) => {
   return (
@@ -56,7 +71,7 @@ export default memo((props: { data: any, isConnectable: boolean }) => {
         type="source"
         position={Position.Bottom}
         id="a"
-        style={{ left: 25, background: primaryColor, color: '#fff', width: 'min-content', height: 'min-content', borderRadius: 7.5, fontSize: 7.5, padding: '2px 6px', borderStyle: 'none', textTransform: 'uppercase' }}
+        style={{...customNgNodeHandleStyle, left: 20}}
         isConnectable={true}>
         Sim
       </Handle>
@@ -64,9 +79,17 @@ export default memo((props: { data: any, isConnectable: boolean }) => {
         type="source"
         position={Position.Bottom}
         id="b"
-        style={{ left: 60, background: primaryColor, color: '#fff', width: 'min-content', height: 'min-content', borderRadius: 7.5, fontSize: 7.5, padding: '2px 6px', borderStyle: 'none', textTransform: 'uppercase' }}
+        style={{...customNgNodeHandleStyle, left: 60}}
         isConnectable={true}>
         Não
+      </Handle>
+      <Handle
+        type="source"
+        position={Position.Bottom}
+        id="c"
+        style={{...customNgNodeHandleStyle, left: 110}}
+        isConnectable={true}>
+        Talvez
       </Handle>
     </div>
   );
