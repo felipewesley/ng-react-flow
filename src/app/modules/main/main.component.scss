@@ -1,0 +1,11 @@
+.container {
+    padding: 20px !important;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.react-flow-container {
+    width: calc(100% - 40px) !important;
+    overflow: hidden !important;
+}

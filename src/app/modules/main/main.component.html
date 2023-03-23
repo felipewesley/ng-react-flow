@@ -1,0 +1,20 @@
+<div class="container">
+
+    <button
+        mat-flat-button
+        [color]="'primary'"
+        (click)="start()">
+        RENDER
+    </button>
+    
+    <div class="react-flow-container">
+    
+        <ng-react-flow-lib
+          [nodes]="nodes"
+          [edges]="edges"
+          (onEdgeClicked)="onEdgeClicked($event)"
+          (onEdgeAdded)="onEdgeAdded($event)"></ng-react-flow-lib>
+    
+      </div>
+
+</div>
