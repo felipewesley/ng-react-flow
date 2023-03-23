@@ -1,10 +1,13 @@
-<div *ngIf="!root">
-    Nada para exibir aqui!
-</div>
-  
-<div class="react-flow-component-options" *ngIf="root">
+<div class="ng-react-flow-wrapper-container">
+
+  <div *ngIf="!root">
+      Nada para exibir aqui!
+  </div>
+
+  <div class="react-flow-component-options" *ngIf="root">
+
+  </div>
+
+  <div class="root-container" #ngReactFlowContainer></div>
 
 </div>
-  
-<div #ngReactFlowContainer></div>
-  

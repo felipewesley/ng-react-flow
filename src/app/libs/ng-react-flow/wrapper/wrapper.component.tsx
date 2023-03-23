@@ -14,67 +14,72 @@ import { ReactFlowComponent, ReactFlowComponentProps, ReactFlowEdge, ReactFlowNo
 })
 export class NgReactFlowLibWrapperComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 
-    @ViewChild('ngReactFlowContainer', { static: true }) containerRef: ElementRef;
+  @ViewChild('ngReactFlowContainer', { static: true }) containerRef: ElementRef;
 
-    @Input('nodes') public nodes: ReactFlowNode[];
-    @Input('edges') public edges: ReactFlowEdge[];
+  @Input('nodes') public nodes: ReactFlowNode[];
+  @Input('edges') public edges: ReactFlowEdge[];
 
-    @Output('onEdgeClicked') public onEdgeClicked = new EventEmitter<any>();
-    @Output('onEdgeAdded') public onEdgeAdded = new EventEmitter<any>();
+  @Output('onEdgeClicked') public onEdgeClicked = new EventEmitter<any>();
+  @Output('onEdgeAdded') public onEdgeAdded = new EventEmitter<any>();
 
-    public root: ReactDOMClient.Root;
+  @Output('onNodeDrag') public onNodeDrag = new EventEmitter<any>();
 
-    constructor() { }
+  public root: ReactDOMClient.Root;
 
-    ngOnInit(): void {
-        // this.render();
-      }
-    
-    ngOnChanges(changes: SimpleChanges): void {
+  constructor() { }
 
-        if (changes) {
-            this.render();
-        }
+  ngOnInit(): void {
+    // this.render();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
+    if (changes) {
+      this.render();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.render();
+  }
+
+  ngOnDestroy() {
+    ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+  }
+
+  private _canRender(): boolean {
+    return this.nodes.length > 0 || this.edges.length > 0;
+    // return true;
+  }
+
+  private render(): void {
+
+    if (!this._canRender())
+      return;
+
+    const initialNodes: ReactFlowNode[] = [...this.nodes];
+    const initialEdges: ReactFlowEdge[] = [...this.edges];
+
+    const onEdgeClicked: ReactFlowComponentProps['onEdgeClick'] = (ev: any) => this.onEdgeClicked.emit(ev);
+    const onEdgeAdded: ReactFlowComponentProps['onEdgeAdded'] = (ev: any) => this.onEdgeAdded.emit(ev);
+
+    const onNodeDrag: ReactFlowComponentProps['onNodeDrag'] = (ev: any) => this.onNodeDrag.emit(ev);
+
+    if (!this.root) {
+      this.root = ReactDOMClient.createRoot(this.containerRef.nativeElement);
     }
 
-    ngAfterViewInit(): void {
-        this.render();
-    }
-
-    ngOnDestroy() {
-        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
-    }
-    
-      private _canRender(): boolean {
-        return this.nodes.length > 0 && this.edges.length > 0;
-      }
-    
-      private render(): void {
-    
-        if (!this._canRender())
-          return;
-    
-        const initialNodes: ReactFlowNode[] = [...this.nodes];
-        const initialEdges: ReactFlowEdge[] = [...this.edges];
-    
-        const onEdgeClicked: ReactFlowComponentProps['onEdgeClick'] = (ev: any) => this.onEdgeClicked.emit(ev);
-        const onEdgeAdded: ReactFlowComponentProps['onEdgeAdded'] = (ev: any) => this.onEdgeAdded.emit(ev);
-    
-        const template = (
-          <React.StrictMode>
-            <div>
-                <ReactFlowComponent
-                  initialNodes={initialNodes}
-                  initialEdges={initialEdges}
-                  onEdgeClick={onEdgeClicked}
-                  onEdgeAdded={onEdgeAdded}></ReactFlowComponent>
-            </div>
-          </React.StrictMode>);
-    
-          if (!this.root) {
-            this.root = ReactDOMClient.createRoot(this.containerRef.nativeElement);
-          }
-    
-          this.root.render(template);
-      }
+    this.root.render(
+      <React.StrictMode>
+        <div style={{ width: '100%', maxWidth: '100%', height: '75%' }}>
+          <ReactFlowComponent
+            initialNodes={initialNodes}
+            initialEdges={initialEdges}
+            onEdgeClick={onEdgeClicked}
+            onEdgeAdded={onEdgeAdded}
+            onNodeDrag={onNodeDrag}></ReactFlowComponent>
+        </div>
+      </React.StrictMode>
+    );
+  }
 }

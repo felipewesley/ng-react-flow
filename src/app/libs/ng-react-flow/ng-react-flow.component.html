@@ -1,5 +1,6 @@
 <ng-react-flow-lib-wrapper
     [nodes]="nodes"
     [edges]="edges"
-    (onEdgeAdded)="onEdgeAdded.emit()"
-    (onEdgeClicked)="onEdgeClicked.emit()"></ng-react-flow-lib-wrapper>
+    (onEdgeAdded)="onEdgeAdded.emit($event)"
+    (onEdgeClicked)="onEdgeClicked.emit($event)"
+    (onNodeDrag)="onNodeDrag.emit($event)"></ng-react-flow-lib-wrapper>

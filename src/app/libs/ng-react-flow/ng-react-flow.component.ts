@@ -14,5 +14,7 @@ export class NgReactFlowLibComponent {
     @Output('onEdgeClicked') public onEdgeClicked = new EventEmitter<any>();
     @Output('onEdgeAdded') public onEdgeAdded = new EventEmitter<any>();
 
+    @Output('onNodeDrag') public onNodeDrag = new EventEmitter<any>();
+
     constructor() { }
 }
