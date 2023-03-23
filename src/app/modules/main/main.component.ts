@@ -12,12 +12,15 @@ export class MainComponent {
 
     public nodes: ReactFlowNode[] = [];
     public edges: ReactFlowEdge[] = [];
-  
+
     private _initialNodes: ReactFlowNode[] = [
-      { id: '1', position: { x: 0, y: 0 }, data: { label: '1', }, draggable: false },
+      { id: '1', position: { x: 0, y: 0 }, data: { label: '1', }, draggable: false, },
       { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
+      { id: '3', position: { x: 0, y: 200 }, data: { label: '3' }, type: 'custom-ng-node' }
     ];
-    private _initialEdges: ReactFlowEdge[] = [{ id: 'e1-2', source: '1', target: '2' }];
+    private _initialEdges: ReactFlowEdge[] = [
+      { id: 'e1-2', source: '1', target: '2', animated: true }
+    ];
 
     constructor(
         private _notificationService: NotificationService
@@ -36,6 +39,12 @@ export class MainComponent {
 
     public onEdgeAdded(event: any): void {
 
+        console.log(event);
         this._notificationService.message(`Edge created!`);
+    }
+
+    public onNodeDrag(event: any): void {
+
+      // console.log('[DRAG]: ', event);
     }
 }
