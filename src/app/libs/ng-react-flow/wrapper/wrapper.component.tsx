@@ -2,12 +2,12 @@ import { Component, ViewChild, ViewEncapsulation, ElementRef, EventEmitter, Inpu
 
 import * as React from "react";
 import * as ReactDOM from "react-dom"
-import * as ReactDOMClient from "react-dom";
+import * as ReactDOMClient from "react-dom/client";
 
 import { ReactFlowComponent, ReactFlowComponentProps, ReactFlowEdge, ReactFlowNode } from "../react-flow/ReactFlow";
 
 @Component({
-    selector: 'ng-react-flow-wrapper',
+    selector: 'ng-react-flow-lib-wrapper',
     templateUrl: './wrapper.component.html',
     styleUrls: [],
     encapsulation: ViewEncapsulation.None
