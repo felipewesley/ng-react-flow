@@ -10,7 +10,7 @@ export class NotificationService {
         private _matSnackBar: MatSnackBar
     ) { }
 
-    public message(message: string): void {
-        this._matSnackBar.open(message);
+    public message(message: string, duration: number = 3000): void {
+      this._matSnackBar.open(message, 'Ok', { duration });
     }
 }
