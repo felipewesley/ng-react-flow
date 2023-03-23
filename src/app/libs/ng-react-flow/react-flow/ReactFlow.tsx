@@ -12,6 +12,7 @@ export type ReactFlowNode<T = any> = {
   };
   data: {
     label: string;
+    nodeId?: string;
   };
 } & Node<T, string>;
 
@@ -31,6 +32,8 @@ export interface ReactFlowComponentProps {
   onNodeClick?: (ev: any) => void;
   onNodeAdded?: (ev: any) => void;
   onNodeDrag?: (ev: any) => void;
+
+  onNodeEdit?: (nodeId: string) => void;
 }
 
 interface FlowProps {
@@ -41,6 +44,7 @@ interface FlowProps {
   onNodesChange: (ev: any) => void;
   onEdgesChange: (ev: any) => void;
   onConnect: (p: any) => void;
+  onNodeEdit: (nodeId: string) => void;
 }
 
 const nodeTypes = {
@@ -49,9 +53,17 @@ const nodeTypes = {
 
 function Flow(props: FlowProps) {
 
-  // const reactFlowInstance = useReactFlow();
+  const reactFlowInstance = useReactFlow();
 
-  const nodes = props.nodes;
+  console.log('[OBJ]:', reactFlowInstance.toObject())
+
+  const nodes = props.nodes.map(n => ({
+    ...n,
+    data: {
+      ...n.data,
+      onNodeEdit: props.onNodeEdit
+    }
+  }));
   const edges = props.edges;
 
   const onEdgeClickHandler = props.onEdgeClick;
@@ -114,6 +126,11 @@ export const ReactFlowComponent: React.FunctionComponent<ReactFlowComponentProps
       return result;
     }), [setEdges]);
 
+  const onNodeEdit = (nodeId: string) => {
+    if (typeof props.onNodeEdit == 'function')
+      props.onNodeEdit(nodeId);
+  };
+
   return (
     <ReactFlowProvider>
       <Flow
@@ -123,7 +140,8 @@ export const ReactFlowComponent: React.FunctionComponent<ReactFlowComponentProps
         onNodeDrag={onNodeDragHandler}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onConnect={onConnect}></Flow>
+        onConnect={onConnect}
+        onNodeEdit={onNodeEdit}></Flow>
     </ReactFlowProvider>
   );
 }

@@ -16,5 +16,7 @@ export class NgReactFlowLibComponent {
 
     @Output('onNodeDrag') public onNodeDrag = new EventEmitter<any>();
 
+    @Output('onNodeEdit') public onNodeEdit = new EventEmitter<string>();
+
     constructor() { }
 }

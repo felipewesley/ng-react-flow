@@ -24,6 +24,8 @@ export class NgReactFlowLibWrapperComponent implements OnInit, OnDestroy, OnChan
 
   @Output('onNodeDrag') public onNodeDrag = new EventEmitter<any>();
 
+  @Output('onNodeEdit') public onNodeEdit = new EventEmitter<string>();
+
   public root: ReactDOMClient.Root;
 
   constructor() { }
@@ -65,6 +67,8 @@ export class NgReactFlowLibWrapperComponent implements OnInit, OnDestroy, OnChan
 
     const onNodeDrag: ReactFlowComponentProps['onNodeDrag'] = (ev: any) => this.onNodeDrag.emit(ev);
 
+    const onNodeEdit: ReactFlowComponentProps['onNodeEdit'] = (nodeId: string) => this.onNodeEdit.emit(nodeId);
+
     if (!this.root) {
       this.root = ReactDOMClient.createRoot(this.containerRef.nativeElement);
     }
@@ -77,7 +81,8 @@ export class NgReactFlowLibWrapperComponent implements OnInit, OnDestroy, OnChan
             initialEdges={initialEdges}
             onEdgeClick={onEdgeClicked}
             onEdgeAdded={onEdgeAdded}
-            onNodeDrag={onNodeDrag}></ReactFlowComponent>
+            onNodeDrag={onNodeDrag}
+            onNodeEdit={onNodeEdit}></ReactFlowComponent>
         </div>
       </React.StrictMode>
     );

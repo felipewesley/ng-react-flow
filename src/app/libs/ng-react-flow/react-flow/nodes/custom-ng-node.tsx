@@ -31,6 +31,14 @@ const customNgNodeHandleStyle: React.CSSProperties = {
 };
 
 export default memo((props: { data: any, isConnectable: boolean }) => {
+
+  const nodeId = props.data.nodeId;
+
+  const onEdit = () => {
+    if (typeof props.data.onNodeEdit == 'function')
+      typeof props.data.onNodeEdit(nodeId);
+  };
+
   return (
     <div style={customNgNodeStyle}>
       <Handle
@@ -44,11 +52,11 @@ export default memo((props: { data: any, isConnectable: boolean }) => {
       {/* Content */}
       <div style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 8 }}>
         <div style={{ borderWidth: '0 4px', borderColor: primaryColor, borderStyle: 'solid', padding: '8px' }}>
-          Step de mensagem
+        {props.data.label}
         </div>
         <button
-          style={{ borderStyle: 'none', borderRadius: 100, padding: '4px 6px', fontSize: 7.5, backgroundColor: primaryColor, color: '#fff', cursor: 'pointer' }}
-          onClick={() => console.log('click!')}>
+          style={{ marginLeft: 'auto', borderStyle: 'none', borderRadius: 100, padding: '4px 6px', fontSize: 7.5, backgroundColor: primaryColor, color: '#fff', cursor: 'pointer' }}
+          onClick={onEdit}>
           Editar
         </button>
       </div>
